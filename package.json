@@ -1,0 +1,25 @@
+{
+	"name": "@netberry/brotherprinter",
+	"version": "1.0.0",
+	"author": "Netberry Solutions",
+	"description": "A Cordova/Phonegap driver for Brother bluetooth printers",
+	"main": "www/brotherprinterplugin.js",
+	"scripts": {
+		"test": "echo \"Error: no test specified\" && exit 1"
+	},
+	"repository": {
+		"type": "git",
+		"url": "git@gitlab-ops.netberrytest.com:ionic/brother-printer-plugin.git"
+	},
+	"keywords": [
+		"netberry",
+		"printer",
+		"brother",
+		"sdk"
+	],
+	"license": "ISC",
+	"engines": [{
+		"name": "cordova",
+		"version": ">=3.0.0"
+	}]
+}

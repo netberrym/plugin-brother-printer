@@ -1,0 +1,61 @@
+<?xml version='1.0' encoding='utf-8'?>
+<plugin id="cordova-brother-printer-plugin" 
+	version="1.0.0" 
+	xmlns="http://apache.org/cordova/ns/plugins/1.0" 
+	xmlns:android="http://schemas.android.com/apk/res/android">
+	<name>brotherprinterplugin</name>
+	
+	<js-module name="brotherprinterplugin" src="www/brotherprinterplugin.js">
+		<clobbers target="brotherprinterplugin" />
+	</js-module>
+
+	<platform name="ios">
+		<config-file parent="/*" target="config.xml">
+			<feature name="brotherprinterplugin">
+				<param name="ios-package" value="brotherprinterplugin" />
+			</feature>
+		</config-file>
+
+		<config-file target="*-Info.plist" parent="UISupportedExternalAccessoryProtocols">
+			<array>
+				<string>com.issc.datapath</string>
+			</array>
+		</config-file>
+		
+		<config-file target="*-Info.plist" parent="NSLocationWhenInUseUsageDescription">
+			<string>Para obtener la posición actual</string>
+		</config-file>
+		
+		<config-file target="*-Info.plist" parent="NSLocationWhenInUseUsageDescription">
+			<string>Para obtener la posición actual</string>
+		</config-file>
+		
+		<header-file src="src/ios/brotherprinterplugin.h" />
+		<source-file src="src/ios/brotherprinterplugin.m" />
+		<framework src="src/ios/libs/BrotherObjCFramework.framework" custom="true" embed="true" />
+	</platform>
+	
+	<platform name="android">
+		<config-file parent="/*" target="res/xml/config.xml">
+			<feature name="brotherprinterplugin">
+				<param name="android-package" value="brother.printer.plugin.brotherprinterplugin" />
+			</feature>
+		</config-file>
+		
+		<config-file parent="/*" target="AndroidManifest.xml">
+			<!--
+            <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
+            <uses-permission android:name="android.permission.ACCESS_WIFI_STATE"/>
+            <uses-permission android:name="android.permission.BLUETOOTH" android:required="false" />
+            <uses-permission android:name="android.permission.BLUETOOTH_ADMIN" android:required="false" />
+            <uses-permission android:name="android.permission.INTERNET"/>
+            <uses-permission android:name="android.permission.USB" android:required="false" />
+            <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+
+            <uses-feature android:name="android.hardware.usb" android:required="false" />-->
+		</config-file>
+
+		<source-file src="src/android/brother/printer/plugin/brotherprinterplugin.java" target-dir="src/brother/printer/plugin" />
+		<source-file src="src/android/libs/BrotherPrintLibrary.jar" target-dir="libs" />
+	</platform>
+</plugin>
