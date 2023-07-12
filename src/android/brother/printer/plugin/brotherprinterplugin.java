@@ -54,36 +54,13 @@ public class brotherprinterplugin extends CordovaPlugin {
 			}
 
 			// Configuración de la impresora
-			BrotherDll_BT.setup(75, 100, 2, 15, 0, 0, 0);
+			Integer heightPapper = Integer.parseInt(object.getString("heightPapper"));
+			BrotherDll_BT.setup(75, heightPapper, 2, 15, 0, 0, 0);
 
 			// Recoge los datos de la image en base 64
-			JSONArray arreglo = object.getJSONArray("base64");
-			for (int i = 0; i <= arreglo.length(); i++){
-				// Limpiamos el buffer de la camara
-				BrotherDll_BT.clearbuffer();
-
-				// Generamos la imagen y sus parametros
-				JSONObject item = arreglo.getJSONObject(i);
-				String base64 = item.getString("image");
-				Integer height = Integer.parseInt(item.getString("height"));
-				Integer width = Integer.parseInt(item.getString("width"));
-				Integer heightPrint = (width / 550) * height;
-				Bitmap bitmap = bmpFromBase64(base64);
-				
-				// Lanzamiento de la impresión
-				BrotherDll_BT.sendImagebyFile(bitmap, 0, 0, 550, heightPrint, 200);
-
-				// Ajustamos la posición del papel de impresión
-				if(i != 0){													
-					BrotherDll_BT.sendcommand("BACKFEED 109\r\n");
-				}
-
-				// Impresión de la imagen
-				BrotherDll_BT.printlabel(1, 1);
-
-			}
-			// Desplazamiento al final de la impresión  
-			BrotherDll_BT.sendcommand("FEED 80\r\n");
+			Bitmap bitmap = bmpFromBase64(object.getString("base64"));
+			Integer height = Integer.parseInt(object.getString("height"));
+			BrotherDll_BT.sendImagebyFile(bitmap, 0, 0, 550, height, 200);
 
 			// Desconecta
 			BrotherDll_BT.closeport(5000);

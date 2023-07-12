@@ -41,37 +41,21 @@ BROTHERSDK *_lib;
     
     if(IsOpen == 1)
     {
-        [_lib setup:@"75" height:@"100" speed:@"2" density:@"15" sensor:@"0" vertical:@"0" offset:@"0"];
-        NSArray *images = object[@"base64"];
-        for (int i = 0; i <= [images count]; i++){
-            [_lib clearbuffer];
-            NSDictionary *item = images[i];
-            NSString *base64 = item[@"image"];
-            
-            NSNumber *height = @([item[@"height"] intValue]);
-            int intheight = [height intValue];
-            NSNumber *width = @([item[@"width"] intValue]);
-            int intwidth = [width intValue];
-            NSNumber *widthPaper = @([@"550" intValue]);
-            int intwidthPaper = [widthPaper intValue];
-            //NSNumber *heightPrint = (width/widthPaper)*height;
-            
-            int intValue = (intwidth/intwidthPaper)*intheight;
-            
-            // Bitmap bitmap = bmpFromBase64(base64);
-            NSData *imageData = [[NSData alloc] initWithBase64EncodedString:base64 options:NSDataBase64DecodingIgnoreUnknownCharacters];
-            _image = [[UIImage alloc] initWithData:imageData];
-            [_lib sendImagebyFile:_image x:0 y:0 width:550 height:intValue threshold:128];
-            // Imprime la imagen
-            if(i != 0){
-                [_lib sendcommand:@"BACKFEED 108\r\n"];
-            }
-            
-            [_lib printlabel:@"1" copies:@"1"];
-        }
-       
-        
-        [_lib closeport:60];
+        // Configuración de la impresora
+        [_lib setup:@"75" height:@([item[@"heightPapper"] intValue]) speed:@"2" density:@"15" sensor:@"0" vertical:@"0" offset:@"0"];
+        [_lib clearbuffer];
+		
+		// Recoge los datos de la image en base 64
+		NSString *base64 = object[@"base64"];
+        NSData *imageData = [[NSData alloc] initWithBase64EncodedString:base64 options:NSDataBase64DecodingIgnoreUnknownCharacters];
+        _image = [[UIImage alloc] initWithData:imageData];
+		[_lib sendImagebyFile:_image x:0 y:0 width:550 height:intValue threshold:128];
+
+		// Imprime de la imagen
+        [_lib printlabel:@"1" copies:@"1"];
+		
+		// Desconecta
+        [_lib closeport:30000];
     }
 
     [self.commandDelegate sendPluginResult:pluginResult callbackId:command.callbackId];
