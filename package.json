@@ -1,6 +1,6 @@
 {
 	"name": "@netberry/brotherprinter",
-	"version": "1.0.0",
+	"version": "1.0.1",
 	"author": "Netberry Solutions",
 	"description": "A Cordova/Phonegap driver for Brother bluetooth printers",
 	"main": "www/brotherprinterplugin.js",
