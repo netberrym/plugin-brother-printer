@@ -37,12 +37,13 @@ public class brotherprinterplugin extends CordovaPlugin {
     }
 
     private void print(JSONArray args, CallbackContext callbackContext) {
-         /* if (message != null && message.length() > 0) {
+        /* 
+		if (message != null && message.length() > 0) {
             callbackContext.success(message);
         } else {
             callbackContext.error("Expected one non-empty string argument.");
         }
- */
+ 		 */
 		try{
 			// Obtiene los valores
 			JSONObject object = args.getJSONObject(0);
@@ -54,16 +55,22 @@ public class brotherprinterplugin extends CordovaPlugin {
 			}
 
 			// Configuración de la impresora
-			Integer heightPapper = Integer.parseInt(object.getString("heightPapper"));
+			int height = Integer.parseInt(object.getString("height"));
+			int heightPapper =  (int)(height * 25.4 / 203);
 			BrotherDll_BT.setup(75, heightPapper, 2, 15, 0, 0, 0);
 
 			// Recoge los datos de la image en base 64
 			Bitmap bitmap = bmpFromBase64(object.getString("base64"));
-			Integer height = Integer.parseInt(object.getString("height"));
 			BrotherDll_BT.sendImagebyFile(bitmap, 0, 0, 550, height, 200);
 
+			// Impresión de la imagen
+			BrotherDll_BT.printlabel(1, 1);
+			
+			// Desplazamiento al final de la impresión  
+			BrotherDll_BT.sendcommand("FEED 60\r\n");
+
 			// Desconecta
-			BrotherDll_BT.closeport(5000);
+			BrotherDll_BT.closeport(30000);
 
 			callbackContext.success("ok");
 		} catch (Exception e) {
