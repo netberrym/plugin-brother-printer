@@ -23,6 +23,8 @@ BROTHERSDK *_lib;
 
 - (void)print:(CDVInvokedUrlCommand*)command
 {
+	CDVPluginResult* pluginResult = nil;
+	
     // Obtiene los valores 
     NSDictionary *object = command.arguments[0];
 	
